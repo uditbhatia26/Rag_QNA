@@ -14,8 +14,8 @@ import os
 
 from dotenv import load_dotenv
 load_dotenv()
-groq_api_key = os.getenv('GROQ_API_KEY')
-os.environ['HF_TOKEN'] = os.getenv('HF_TOKEN')
+groq_api_key = st.secrets["GROQ_API_KEY"]
+os.environ['HF_TOKEN'] = st.secrets["HF_TOKEN"]
 
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
