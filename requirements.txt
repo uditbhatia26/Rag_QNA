@@ -7,5 +7,5 @@ langchain-groq
 langchain-huggingface
 langchain-text-splitters
 python-dotenv
-chromadb
+faiss-cpu
 PyPDF2

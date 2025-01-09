@@ -1,7 +1,7 @@
 import streamlit as st
-from langchain.chains import create_history_aware_retriever, create_retrieval_chain
+from langchain.chains import create_retrieval_chain, create_history_aware_retriever
 from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -14,8 +14,8 @@ import os
 
 from dotenv import load_dotenv
 load_dotenv()
-groq_api_key = st.secrets["GROQ_API_KEY"]
-os.environ['HF_TOKEN'] = st.secrets["HF_TOKEN"]
+groq_api_key = st.secrets['GROQ_API_KEY']
+os.environ['HF_TOKEN'] = st.secrets['HF_TOKEN']
 
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
@@ -48,7 +48,7 @@ if uploaded_files:
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size = 5000, chunk_overlap=500)
     splits = text_splitter.split_documents(documents)
-    vectorstore = Chroma.from_documents(splits, embeddings)
+    vectorstore = FAISS.from_documents(splits, embeddings)
     retriever = vectorstore.as_retriever()
 
 
