@@ -14,10 +14,12 @@ import os
 
 from dotenv import load_dotenv
 load_dotenv()
-# groq_api_key = st.secrets['GROQ_API_KEY']
-# os.environ['HF_TOKEN'] = st.secrets['HF_TOKEN']
-groq_api_key = os.getenv("GROQ_API_KEY")
-os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN")
+groq_api_key = st.secrets['GROQ_API_KEY']
+os.environ['HF_TOKEN'] = st.secrets['HF_TOKEN']
+
+# For local Testing
+# groq_api_key = os.getenv("GROQ_API_KEY")
+# os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN")
  
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
@@ -46,7 +48,6 @@ if uploaded_files:
         loader = PyPDFLoader(uploaded_file.name)
         docs = loader.load()
         documents.extend(docs)
-        st.write(documents)
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size = 5000, chunk_overlap=500)
     splits = text_splitter.split_documents(documents)
